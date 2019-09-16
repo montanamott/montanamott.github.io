@@ -1,5 +1,5 @@
 .primary-dark {
-    background-color: #181818; 
+    background-color: #272727; 
 }
 
 .header-div {
@@ -10,50 +10,51 @@
 }
 
 .center-section {
-    background-color: #3d3d3d; 
-    border:1px solid white;
+    background-color: #444444; 
     width:40%; 
     min-width: 500px;
     border-radius:8px; 
-    margin-top: 120px;
     margin-left: auto; 
     margin-right: auto; 
     align-content: center; 
     text-align: center;
+    padding-top: 0.8%;
 }
 
 img.main-pic {
     align-content: center; 
     height: 60%; 
     width: 60%;
-    border-radius: 50%;
     margin-top: -20%;
-    border: 2px solid rgb(184, 184, 184);
 
 }
 
 .light-blue-font {
     color: #bcbcdd;
-    text-align: left;
+    text-align: center;
     padding-left: 6%;
     padding-right: 10%;
     padding-bottom: 10%;
+    font-size: 20px;
+    font-family: "Verdana";
+    line-height: 1.25;
 }
 
 .name {
     font-family: "Lucida Console";
     color: white;
+    font-size: 46px;
 }
 
 .image-cropper {
-    margin: -18% auto;
+    margin: auto;
     align-self: center;
-    width: 190px;
-    height: 190px;
+    height: 200px;
+    width: 200px;
     overflow: hidden;
     border-radius: 50%;
-    border: 2px solid rgb(163, 163, 192);
     margin-bottom: 5%;
+    margin-top: 5%;
 }
 
 .profile-pic {
@@ -63,8 +64,7 @@ img.main-pic {
 }
 
 a {
-    color: white; 
-    font-size: 14px; 
+    color: rgb(214, 205, 226);
     text-decoration: none; 
     font-weight: bold;
 }

@@ -1,5 +1,5 @@
 .primary-dark {
-    background-color: #272727; 
+    background-color: #384755; 
 }
 
 .header-div {
@@ -11,7 +11,7 @@
 }
 
 .center-section {
-    background-color: #444444; 
+    background-color: #242425; 
     width:100%;
     max-width: 700px;
     min-width: 500px;
@@ -21,6 +21,12 @@
     align-content: center; 
     text-align: center;
     padding-top: 0.8%;
+    padding-bottom: 1%;
+}
+
+.left-aligned {
+    align-content: left; 
+    text-align: left;
 }
 
 img.main-pic {
@@ -33,19 +39,25 @@ img.main-pic {
 
 .light-font {
     color: #e4e4e4;
-    text-align: center;
-    padding-left: 6%;
-    padding-right: 10%;
-    padding-bottom: 10%;
     font-size: 3.0vh;
     font-family: "Verdana";
     line-height: 1.25;
+}
+
+.small-size {
+    font-size: 2.6vh;
 }
 
 .name {
     font-family: "Lucida Console";
     color: white;
     font-size: 6.0vh;
+}
+
+.padded {
+    padding-left: 6%;
+    padding-right: 10%;
+    padding-bottom: 10%;
 }
 
 .image-cropper {
@@ -65,8 +77,15 @@ img.main-pic {
     width: auto;
 }
 
+.big-link {
+    font-size: 3.5vh;
+    text-decoration: underline;
+
+
+}
+
 a {
-    color: rgb(214, 205, 226);
+    color: rgb(94, 215, 236);
     text-decoration: none; 
     font-weight: bold;
 }

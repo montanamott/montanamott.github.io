@@ -4,7 +4,7 @@
 
 .header-div {
     width:100%; 
-    max-width: 700px;
+    max-width: 900px;
     min-width: 500px;
     margin-left: auto; 
     margin-right: auto; 
@@ -13,7 +13,7 @@
 .center-section {
     background-color: #242425; 
     width:100%;
-    max-width: 700px;
+    max-width: 900px;
     min-width: 500px;
     border-radius:8px; 
     margin-left: auto; 
@@ -39,23 +39,23 @@ img.main-pic {
 
 .light-font {
     color: #e4e4e4;
-    font-size: 3.0vh;
+    font-size: 1.8rem;
     font-family: "Verdana";
     line-height: 1.25;
 }
 
 .small-size {
-    font-size: 2.6vh;
+    font-size: 1.52rem;
 }
 
 .header-size {
-    font-size: 4.0vh;
+    font-size: 2.5rem;
 }
 
 .name {
     font-family: "Lucida Console";
     color: white;
-    font-size: 6.0vh;
+    font-size: 3.7rem;
 }
 
 .padded {
@@ -82,7 +82,7 @@ img.main-pic {
 }
 
 .big-link {
-    font-size: 3.5vh;
+    font-size: 2.2rem;
     display:inline-block;
     font-weight: bold;
 }
@@ -90,17 +90,4 @@ img.main-pic {
 a {
     color: rgb(94, 215, 236);
     text-decoration: none; 
-}
-
-ul {
-    list-style: none; /* Remove default bullets */
-  }
-
-ul li::before {
-  content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-  color: white; /* Change the color */
-  font-weight: bold; /* If you want it to be bold */
-  display: inline-block; /* Needed to add space between the bullet and the text */
-  width: 1em; /* Also needed for space (tweak if needed) */
-  margin-left: -1em; /* Also needed for space (tweak if needed) */
 }

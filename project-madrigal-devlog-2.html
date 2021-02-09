@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Montana Mott</title>
+</head>
+<body class="primary-dark">
+  <div class="header-div"> 
+    <h1 class="name"> > Project Madrigal </h1>
+  </div>
+  <div class="left-aligned center-section">
+    <h1 class="header-size light-font padded"> 
+      Week 2: Beginning Raymarching in Unity
+    </h1>
+    <p class="small-size light-font padded"> 
+     This week, I began upon my journey of integrating raymarching and rasterization. The checkpoint I set out to hit was to succesfully add raymarched geometry to a scene in Unity. To start, I wanted to get comfortable 
+     with raymarched geometry in a simpler environment where I could focus on the raymarching itself and less on doing stuff in the engine to get it to work. Therefore, I wrote a raymarching shader in GLSL on Shadertoy. 
+      <br> <br> 
+
+      <a href='https://www.shadertoy.com/'> Shadertoy</a> is a website that allows users to write fragment shaders and run them in a browser using WebGL. It was really useful for iterating fast and coming up with a raymarching shader to port to Unity. I followed 
+      <a href='http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/'> Jamie Wong's raymarching blogpost here </a>, and I pulled some SDF resources <a href='https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm'> from Inigo Quilez's website </a>, and I developed the shader seen here (if you select the play button it should rotate).
+      </p>
+      <div class="padded content-embed">
+      <iframe width="640vh" height="360vh" frameborder="0" src="https://www.shadertoy.com/embed/ttcfW4?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
+      </div>
+      <p class="small-size light-font padded"> 
+      I specifically made the color of the surface equivalent to the world space normals (mapped to RGB color space), 
+      so that I could identify transformation issues easier, especially during porting it to Unity (in fact, this helped me catch that my original shader was using a right handed coordinate system whereas Unity has a left handed coordinate system!)
+      <br> <br> 
+
+      After writing this shader in Shadertoy and visually verifying the results, I was confident in my raymarching ability and it was time to port it into Unity! I first created a 3D Project using the
+      Built-in Render Pipeline and created a basic camera script to fly around my scene. I then followed <a href='https://bgolus.medium.com/rendering-a-sphere-on-a-quad-13c92025570c'> this blog post by Ben Golus </a> for figuring out how to set up my shader to access relevant variables such as the camera position and depth buffer.  
+      I then finally ported my Shadertoy shader from above into Unity, which was mainly a matter of converting GLSL to HLSL (so mainly vec3 to float3...). After completing this, here 
+      is what my raymarched object looked like shown next to a default Unity cube. 
+      </p>
+
+      <div class="padded content-embed">
+      <video width="640vh" height="333vh" controls>
+        <source src="raymarch_side_unity.mp4" type="video/mp4">
+      </video>
+      </div>
+
+      <p class="small-size light-font padded"> 
+      I was also able to write to the depth buffer, which allows my raymarched geometry to be accurately in front of, behind, or interesecting rasterized geometry. In the following screenshot, the angled gray rectangular prism is 
+      rasterized geometry, and it is going "inside" my raymarched geometry. 
+      
+      </p>
+      <div class="padded content-embed">
+      <img  width="640vh" height="267" src="depth_comparison.png" alt="A comparison of two scenes in the game, one with correct depth interpretation and one without">
+      </div>
+
+      <p class="small-size light-font padded"> 
+      As you could probably see above, there were no shadows being casted onto or from my raymarched geometry. My goals for next week are to begin to explore lighting and shadows to make the raymarched geometry fit better 
+      into a rasterized scene. 
+
+  </div>
+
+</body>
+</html>

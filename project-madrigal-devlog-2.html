@@ -43,7 +43,7 @@
 
       <p class="small-size light-font padded"> 
       I was also able to write to the depth buffer, which allows my raymarched geometry to be accurately in front of, behind, or interesecting rasterized geometry. In the following screenshot, the angled gray rectangular prism is 
-      rasterized geometry, and it is going "inside" my raymarched geometry. 
+      rasterized geometry, and it is going "inside" my raymarched geometry. On the left hand side, before the appropriate depth buffer write, it would simply intersect with the bounding box of the raymarched game object. This is corrected on the right.
       
       </p>
       <div class="padded content-embed">
@@ -51,7 +51,7 @@
       </div>
 
       <p class="small-size light-font padded"> 
-      As you could probably see above, there were no shadows being casted onto or from my raymarched geometry. My goals for next week are to begin to explore lighting and shadows to make the raymarched geometry fit better 
+      As you could probably see above, however, there were no shadows being casted onto or from my raymarched geometry. My goals for next week are to begin to explore lighting and shadows to make the raymarched geometry fit better 
       into a rasterized scene. 
 
   </div>

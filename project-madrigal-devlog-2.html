@@ -19,7 +19,7 @@
       <br> <br> 
 
       <a href='https://www.shadertoy.com/'> Shadertoy</a> is a website that allows users to write fragment shaders and run them in a browser using WebGL. It was really useful for iterating fast and coming up with a raymarching shader to port to Unity. I followed 
-      <a href='http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/'> Jamie Wong's raymarching blogpost here </a>, and I pulled some SDF resources <a href='https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm'> from Inigo Quilez's website </a>, and I developed the shader seen here (if you select the play button it should rotate).
+      <a href='http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/'> Jamie Wong's raymarching blogpost here,</a> and I pulled some SDF resources <a href='https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm'> from Inigo Quilez's website,</a> and I developed the shader seen here (if you select the play button it should rotate).
       </p>
       <div class="padded content-embed">
       <iframe width="640vh" height="360vh" frameborder="0" src="https://www.shadertoy.com/embed/ttcfW4?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
@@ -30,7 +30,7 @@
       <br> <br> 
 
       After writing this shader in Shadertoy and visually verifying the results, I was confident in my raymarching ability and it was time to port it into Unity! I first created a 3D Project using the
-      Built-in Render Pipeline and created a basic camera script to fly around my scene. I then followed <a href='https://bgolus.medium.com/rendering-a-sphere-on-a-quad-13c92025570c'> this blog post by Ben Golus </a> for figuring out how to set up my shader to access relevant variables such as the camera position and depth buffer.  
+      Built-in Render Pipeline and created a basic camera script to fly around my scene. I then followed <a href='https://bgolus.medium.com/rendering-a-sphere-on-a-quad-13c92025570c'> this blog post by Ben Golus</a> for figuring out how to set up my shader to access relevant variables such as the camera position and depth buffer.  
       I then finally ported my Shadertoy shader from above into Unity, which was mainly a matter of converting GLSL to HLSL (so mainly vec3 to float3...). After completing this, here 
       is what my raymarched object looked like shown next to a default Unity cube. 
       </p>
@@ -47,7 +47,7 @@
       
       </p>
       <div class="padded content-embed">
-      <img  width="640vh" height="267" src="depth_comparison.png" alt="A comparison of two scenes in the game, one with correct depth interpretation and one without">
+      <img  width="640vh" height="267vh" src="depth_comparison.png" alt="A comparison of two scenes in the game, one with correct depth interpretation and one without">
       </div>
 
       <p class="small-size light-font padded"> 

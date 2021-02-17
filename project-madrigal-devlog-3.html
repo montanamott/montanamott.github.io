@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Montana Mott</title>
+</head>
+<body class="primary-dark">
+  <div class="header-div"> 
+    <h1 class="name"> > Project Madrigal </h1>
+  </div>
+  <div class="left-aligned center-section">
+    <h1 class="header-size light-font padded"> 
+      Week 3: Adding Basic Lighting and Shadows
+    </h1>
+    <p class="small-size light-font padded"> 
+    For this week of Project Madrigal, I set out to actually add some shadow casting and lighting to my previously-neon-looking raymarched geometry. My first attempt was to add some basic lighting! This wasn't too difficult because 
+    I was already generating a color based on my normals at the end of my fragment shader. Now, I swapped that with calculating some basic diffuse lighting based on the main directional light in Unity. Here is what that looks like below, 
+    with my raymarched geo on the left and the Unity cube on the right: 
+    </p>
+
+    <div class="padded content-embed">
+      <img  width="640vh" height="376vh" src="images/basic_lighting_comparison.PNG" alt="A comparison of two scenes in the game, one with correct depth interpretation and one without">
+    </div>
+
+    <p class="small-size light-font padded"> 
+      However, you can probably see in the image above that it's really hard to see if the raymarched geo is actually sitting on the plane, or how far away it is. That's partly because it's not casting a shadow! 
+      So, that's what I pursued next. <br/> <br/> In Unity, I did this by writing a ShadowCaster pass in my shader. For point light shadows, this was sufficient as they use the same perspective projection (and same code) as when I draw 
+      the object normally. The tricky part, though, was that my object needed to be able to be rendered orthographically as well, rather than the perspective projection. 
+      This is because Unity's directional shadows use an orthographic projecting when drawing the object for the shadow map. I accomplished this by doing some fun math in the vertex shader, with help from <a href='https://bgolus.medium.com/rendering-a-sphere-on-a-quad-13c92025570c'> this blog post by Ben Golus.</a>
+      Here were the results of that: 
+    </p>
+
+      <div class="padded content-embed">
+        <img  width="640vh" height="376vh" src="images/basic_shadow_cast.PNG" alt="A comparison of two scenes in the game, one with correct depth interpretation and one without">
+      </div>
+
+      <div class="padded content-embed">
+        <img  width="640vh" height="376vh" src="images/point_light_shadows.PNG" alt="A comparison of two scenes in the game, one with correct depth interpretation and one without">
+      </div>
+
+
+      <br> <br> 
+
+
+      <p class="small-size light-font padded"> 
+        You get bonus points if you noticed that in the second image, demonstrating point light shadows, the point light is actually not lighting up the raymarched geo (but it is causing it to cast a shadow!). 
+        This is because my lighting calculations currently only pull from the main directional light. The solution to this would be to add a ForwardAdd pass to do additive lighting for successive lights after the first. But....... 
+        that's where some issues with this whole approach pop up. <br/> <br/> 
+
+        My current method for Project Madrigal uses Forward Rendering, where each object in the scene calculates and combines the impact of surrounding lights to generate its color. Drawing my raymarched geometry is always rather 
+        expensive, because every time you draw it from a different angle, it needs to be completely raymarched again. In comparison to classic rasterized geometry, this is much slower, so I want to reduce the amount of times 
+        I raymarch my geometry. Using ForwardAdd would mean I would need to remarch my geometry several more times, which gets incredibly slow. This is where I realized I will need to pursue Deferred Rendering instead. 
+
+        <br/> <br/> 
+        Deferred Rendering, <a href='https://gamedevelopment.tutsplus.com/articles/forward-rendering-vs-deferred-rendering--gamedev-12342'> explained here</a> would mean I only need to draw my geometry once into a G-buffer for lighting calculations. It also 
+        has several other advantages for raymarched geometry, that I learned about this week in an informative interview with Gregory Ivanov, the creator of <a href='https://bananaft.itch.io/yedomaglobula'> Yedoma Globula</a>. The main benefit is that 
+        it would allow me to perform cone tracing, which would let different rays share work while raymarching into the geometry. This is important, as I have already noticed a drastic increase in execution time 
+        when my raymarched geometry is scaled up and contains a lot of empty space, in which rays are traveling until they hit a max distance. An example of such a scene would be this: 
+      </p>
+
+      <div class="padded content-embed">
+        <img  width="640vh" height="376vh" src="images/large_perf_issue.PNG">
+      </div>
+
+
+        <p class="small-size light-font padded"> 
+       Deferred rendering would also allow me to support several other performance and rendering techniques (such as Ambient Occlusion), many of which are <a href='https://medium.com/@bananaft/my-journey-into-fractals-d25ebc6c4dc2'>described here.</a>
+
+        <br/> <br/> 
+
+        This is why, for next week, I plan to port my existing work over to the Deferred Rendering pipeline in Unity. This won't be trivial, but it also should be very possible given how well raymarching lends itself to deferred 
+        rendering. In doing this, I should also be able to add support for self shadowing and multiple light interactions. Also don't worry, I'll try to start coming up with prettier raymarched geometry to use as well to move away from 
+        the boring test cube!
+
+        </p>
+
+  </div>
+
+</body>
+</html>

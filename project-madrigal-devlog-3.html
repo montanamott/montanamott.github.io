@@ -25,9 +25,9 @@
 
     <p class="small-size light-font padded"> 
       However, you can probably see in the image above that it's really hard to see if the raymarched geo is actually sitting on the plane, or how far away it is. That's partly because it's not casting a shadow! 
-      So, that's what I pursued next. <br/> <br/> In Unity, I did this by writing a ShadowCaster pass in my shader. For point light shadows, this was sufficient as they use the same perspective projection (and same code) as when I draw 
-      the object normally. The tricky part, though, was that my object needed to be able to be rendered orthographically as well, rather than the perspective projection. 
-      This is because Unity's directional shadows use an orthographic projecting when drawing the object for the shadow map. I accomplished this by doing some fun math in the vertex shader, with help from <a href='https://bgolus.medium.com/rendering-a-sphere-on-a-quad-13c92025570c'> this blog post by Ben Golus.</a>
+      So, that's what I pursued next. <br/> <br/> In Unity, I did this by writing a ShadowCaster pass in my shader. For point light shadows, this was sufficient as they use the same perspective projection (same vertex shader) as when I draw 
+      the object normally. The tricky part, though, was that my object needed to be able to be rendered orthographically as well, rather than with the perspective projection. 
+      This is because Unity's directional shadows use an orthographic projection when drawing the object for the shadow map. I accomplished this by doing some fun math in the vertex shader, with help from <a href='https://bgolus.medium.com/rendering-a-sphere-on-a-quad-13c92025570c'> this blog post by Ben Golus.</a>
       Here were the results of that: 
     </p>
 

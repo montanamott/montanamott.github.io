@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Montana Mott</title>
+</head>
+<body class="primary-dark">
+  <div class="header-div"> 
+    <h1 class="name"> <a style="color:white" href='project-madrigal.html'>> Project Madrigal </a> </h1>
+  </div>
+  <div class="left-aligned center-section">
+    <h1 class="header-size light-font padded"> 
+      Physics with Raymarched Geometry!
+    </h1>
+
+    <div class="padded content-embed">
+      <img  width="640vh" height="376vh" src="images/cool_menger.PNG" alt="A scene in unity demonstrating incorrect lighting">
+    </div>
+
+    <p class="small-size light-font padded"> 
+   This week for Project Madrigal I focued mainly on physics. My goal is to make it possible for rasterized geometry to be able to collide and interact with raymarched geometry as seamlessly as possible. <br/> <br/>
+
+   The two main games I've seen with interactive raymarched geometry, <a href='https://bananaft.itch.io/yedomaglobula'> Yedoma Globula </a> and <a href='https://codeparade.itch.io/marblemarcher'> Marble Marcher </a>
+   (please go check both of them out, they are wonderful), both use spherical colliders on their player to make their solids interactable. This is because in a classical collision system, you would need a primitive or mesh collider 
+   on the raymarched geometry in order to have a primitive or mesh collider on a player. However, you can't usually accurately represent the collision of raymarched geometry with a primitive shape, and since the geometry is not stored as 
+   a mesh, doing mesh collisions is out of the question if we want to do the raymarching dynamically in realtime (which is my current aim). I specify "dynamically" here, because for certain static raymarched geometry it could theoretically be possible 
+   to generate a mesh offline for collision, but that is not the focus of Project Madrigal right now.
+
+   <br/> <br/> 
+   As a result of this, for now I am pursuing spherical colliders for dynamic objects that need to collide with raymarched geometry -- however, my aim is to support objects with multiple composited spherical colliders to get results as close as possible to a typical collision system. 
+   Do note, that with this approach I would likely still have a regular mesh collider on geometry to handle collisions with rasterized objects. 
+   <br/> <br/>
+  The reason spherical colliders work is because raymarched geometry is specified using signed distance functions; recall that with signed distance functions, we can tell how far an arbitrary point is from our raymarched geometry's surface, but we cannot 
+  tell exactly where that closest point is on our surface. Therefore, we can detect if a spherical collider is colliding with a raymarched surface simply be checking if the SDF function evaluated from the sphere collider's origin 
+  returns a number less than our radius. Then, we can use a normal vector from the surface to determine how to resolve our collision. I've drawn a diagram here of what it might look like for a sphere to collide with a green SDF surface. 
+
+
+
+
+
+    <div class="padded content-embed">
+      <img  width="640vh" height="376vh" src="images/physics_diagram.PNG" alt="A diagram of a sphere collision">
+    </div>
+
+    <p class="small-size light-font padded"> 
+      This is the approach I took, although I did something a bit different (I believe) from the two games I mentioned above. I evaluated my normal vector for my raymarched surface not on the surface itself, but at the 
+      origin of my spherical collider. This is because the gradient method used to calculate the normal vector for a signed distance function will give a vector that gives the locally optimal direction for maximizing distance from the surface -- which 
+      I believe is usually a good estimator of the appropriate escape vector to remove the sphere collider from the SDF surface. This worked out well, and I have a video demo of my progress here: 
+
+
+
+    </p>
+
+     <div class="padded content-embed">
+      <video width="640vh" height="333vh" controls>
+        <source src="images/basic_collision_video.mp4" type="video/mp4">
+      </video>
+      </div>
+
+      <p class="small-size light-font padded"> 
+      In this next week I will aim to iterate on my physics work and flesh out more precise collisions with more complex raymarched and rasterized geometry. I also aim to better integrate my C# code and shader code so that 
+      I can do more with dynamically changing fractals to explore more interesting gameplay experiences. 
+
+        </p>
+
+  </div>
+
+</body>
+</html>

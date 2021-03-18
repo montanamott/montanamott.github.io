@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Montana Mott</title>
+</head>
+<body class="primary-dark">
+  <div class="header-div"> 
+    <h1 class="name"> <a style="color:white" href='project-madrigal.html'>> Project Madrigal </a> </h1>
+  </div>
+  <div class="left-aligned center-section">
+    <h1 class="header-size light-font padded"> 
+      Better Physics and CPU Interaction
+    </h1>
+
+    <div class="padded content-embed">
+      <img  width="640vh" height="319vh" src="images/claire_fractal_cover.PNG" alt="A scene in unity with a penguin standing upon a fractal looking world">
+    </div>
+
+    <p class="small-size light-font padded"> 
+   For this blogpost, I will discuss all the concepts I've implemented and then show a final demo at the end that demonstrates them all. Don't forget to check out the demo video 
+   at the bottom of the page.  <br/> <br/>
+   
+   This week for Project Madrigal I focued mainly on refining and building on my previous work in physics and fractal manipulation. <br/> <br/>
+
+   First, I implemented the ability to have multiple spherical colliders on any given game object that will collide and be pushed out of raymarched geometry. This was pretty much just taking my single sphere work 
+   and adding some looping and math logic to make it work with multiple spheres. I also decided to reproject an objects velocity along the plane tangent to the SDF surface when they collide, whereas before I simply 
+   pushed the objects position out without changing velocity. 
+
+   <br/> <br/> 
+   Next, I implemented raycasting into the raymarched geometry on the CPU side of things in C#. This built on previous work as well, once I convert the world space ray into the object space of my raymarched geometry, I can 
+   use the same logic I do in my raymarching shader to march forward and calculate intersection point. 
+
+   <br/> <br> 
+   After implementing support for raycasting, I moved on to exposing my fractal parameters to the CPU so I could change them in realtime or in the Unity editor. Since my raymarching geometry works as a shader applied through a material, 
+   I needed a way to change material properties on a per object basis, since I want to support multiple raymarched objects in the same scene. This is where Unity's <a href='https://thomasmountainborn.com/2016/05/25/materialpropertyblocks/'> Material Property Blocks </a> came in handy, 
+   which allowed me to take my Material Properties, which were things such as Fractal Subdivision Amount (to change the shape of the fractal), and alter them for each objects independently while still counting only as one material. During this, I also 
+   added the ability to linearly interpolate between two different raymarched geometries to increase shape possibilities. 
+
+   <br/> <br/> 
+
+   Now that I had better physics, raycasting, and CPU side realtime SDF manipulation, I wanted to make something that combines them all. I set up a scene that allows me to linearly interpolate between a raymarched sphere (representing a planet of sorts), 
+   and a Menger fractal (which also has adjustable parameters). I then wrote a script that places rasterized 3D models of trees and such onto the raymarched Geometry as it changes in real-time using raycasting. And while this is happening, you can walk (and fly) around as a penguin, 
+   colliding with both the raymarched geometry and the rasterized geometry. I also got post processing effects working (such as Ambient Occlusion) to make it look even prettier. Now, time for the video!
+
+   
+  </p>
+
+  <div class="padded content-embed">
+    <video width="640vh" height="319vh" controls>
+      <source src="images/planet_demo.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <p class="small-size light-font padded"> 
+    While the video is cool, there are still quite a few issues that need to be addressed, which are what I will be tackling for this next week. Namely, there are some artifacts with "grazing angles," where the raymarched 
+    surface's normal is very nearly but not quite perpendicular to the view vector. I also need to do more work with shadows; I have self shadowing on the raymarched geometry implemented from a few blog posts ago, but it 
+    is too expensive at the moment, meaning I need to make room in the perf budget for it or implement faster shadowing. Also, I have written some camera correction code to keep the camera out of the inside of the raymarched geometry, but, as seen in the video 
+    it could use some improvement. 
+    
+   </p>
+
+  </div>
+
+</body>
+</html>

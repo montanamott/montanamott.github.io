@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Montana Mott</title>
+</head>
+<body class="primary-dark">
+  <div class="header-div"> 
+    <h1 class="name"> <a style="color:white" href='project-madrigal.html'>> Project Madrigal </a> </h1>
+  </div>
+  <div class="left-aligned center-section">
+    <h1 class="header-size light-font padded"> 
+      Bugfixing and Beginning Efficient Deferred Shadows
+    </h1>
+
+    <p class="small-size light-font padded"> 
+
+
+    This week in Project Madrigal, I first tried to fix some of the issues I discussed last week that I noticed in my demo project. First, I tackled the "grazing" angle issue. This was mainly an oversight on my part in that when 
+    rays reached their max step amount I returned the max distance instead of where the ray ended. After tracking it down and fixing it, here was the result: 
+
+  </p>
+
+
+<div class="padded content-embed">
+  <img  width="640vh" height="340vh" src="images/combined_grazing.PNG" alt="A view of two different scenes where one is drawn correctly, the other is not">
+</div>
+
+<p class="small-size light-font padded"> 
+
+
+  I then tried to tackle performance, as I felt I could get some optimization work done to "make room" for the better shadowing I plan to add next. I tried a lot of specific shader code optimizations, but none really worked 
+  out to make a dramatic impact. However, while I was looking over my Unity performance heirarchy and watching my frame rate shift as I moved about my scene, I noticed something odd... 
+   When my camera was just outside of the bounding box of my raymarched geometry, my frame would take almost twice as long to render. This perplexed me. For reference, here is what the bounding box of my SDF geometry looks like -- it is 
+  actually the cube mesh upon which I draw the fractal! 
+
+</p>
+
+<div class="padded content-embed">
+  <img  width="640vh" height="376vh" src="images/unity_showing_cube.PNG" alt="A view of a memory buffer containing normal vectors">
+</div>
+
+<p class="small-size light-font padded"> 
+
+Now, when I draw my SDF, I actually use the ray from my camera to a pixel on the cube mesh for the marching ray. This runs on whatever fragments of the cube are visible - whether they're front facing or back facing (drawing it on the backface is necessary 
+so when you move inside the SDF it still get drawn). However, my FPS seemed to tank when part of the SDF was being drawn on the front face and part was being drawn on a back face, which is when my camera is near that bounding box. This might seem like some 
+small corner case, but this actually happens extremely often as anytime you are walking along the top of the fractal this is likely. I had a gut feeling that maybe it was this split somehow that was tanking performance, so I tried showing only the backface of my cube it solved 
+this issue completely. My FPS almost doubled for a lot of my gameplay experience as a result. I'm still not entirely sure why that tanked performance, as I don't believe it caused divergence in the fragment shader. 
+
+</br> </br> 
+Next, I started my work on screen space shadows. My idea for implementing these shadows was to use a fragment shader to draw to the screen-space shadowmask buffer that Unity uses in deferred rendering. The fragment 
+shader would just run for each pixel on the screen, and it would happen after the g-buffer pass so that I have access to the normal vector and world space position (through depth). I can then use those two values to 
+raymarch towards relevant lights, detect if I have a collision with any SDF geometry, and draw a shadow to the mask if I do.
+
+<br/> <br/> 
+I began implementing this using a <a href='https://docs.unity3d.com/Manual/GraphicsCommandBuffers.html'> Command Buffer, </a> that runs at LightEvent.AfterScreenspaceMask. A Command Buffer in Unity is simply a chunk of graphics code
+you can have run at different insertion points in the render pipeline.  
+
+<br/> <br/> 
+
+ I succesfully wrote a fragment shader that is able to draw to the shadow mask and sample 
+the deferred gbuffers. The fragment shader runs over a screen-space quad, which is a technique used in many post processing effects. For next week, I will actually implement the marching logic for my shadowing fragment shader to 
+complete screen space shadows. I also plan to flesh out my demo more and add some player guidance and interactive gameplay beyond what I have now. 
+    
+   </p>
+
+  </div>
+
+</body>
+</html>

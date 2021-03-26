@@ -44,12 +44,32 @@
 <p class="small-size light-font padded"> 
 
 Now, when I draw my SDF, I actually use the ray from my camera to a pixel on the cube mesh for the marching ray. This runs on whatever fragments of the cube are visible - whether they're front facing or back facing (drawing it on the backface is necessary 
-so when you move inside the SDF it still get drawn). However, my FPS seemed to tank when part of the SDF was being drawn on the front face and part was being drawn on a back face, which is when my camera is near that bounding box. This might seem like some 
+so when you move inside the SDF it still get drawn). However, my FPS seemed to tank when part of the SDF was being drawn on a front face and part was being drawn on a back face, which is when my camera is near that bounding box. This might seem like some 
 small corner case, but this actually happens extremely often as anytime you are walking along the top of the fractal this is likely. I had a gut feeling that maybe it was this split somehow that was tanking performance, so I tried showing only the backface of my cube it solved 
-this issue completely. My FPS almost doubled for a lot of my gameplay experience as a result. I'm still not entirely sure why that tanked performance, as I don't believe it caused divergence in the fragment shader. 
+this issue completely (and the backfaces of the cube always bound the SDF appripriatetely in screen space anyway). My FPS almost doubled for a lot of my gameplay experience as a result. I'm still not entirely sure why that tanked performance, as I don't believe it caused divergence in the fragment shader. 
+<br/> <br/> 
+EDIT (3/26/2021): As <a href='https://twitter.com/nico_m__'> Nico M.</a> kindly pointed out, this was likely an interesting case of overdraw. Since I initially had face culling disabled in the shader, when my camera was at the edge of the mesh 
+and viewing both some of a front face and some of a back face, my expensive fragment shader ran over the entirety of both partially viewed faces. By enabling front face culling, I gurantee that you can never see the front face and trigger this overdraw. 
+
 
 </br> </br> 
-Next, I started my work on screen space shadows. My idea for implementing these shadows was to use a fragment shader to draw to the screen-space shadowmask buffer that Unity uses in deferred rendering. The fragment 
+Next, I started my work on screen space shadows. My idea for implementing these shadows was to use a fragment shader to draw to the screen-space shadowmask buffer that Unity uses in deferred rendering.
+You can see this shadowmask buffer in the frame debugger, here is an image of a scene and then the corresponding shadowmask buffer: 
+
+</p>
+
+<div class="padded content-embed">
+  <img  width="640vh" height="376vh" src="images/main_view_shadows.PNG" alt="A view of a screne from my demo game, a penguin stands on a sphere surrounded by trees and rocks">
+</div>
+
+<div class="padded content-embed">
+  <img  width="640vh" height="376vh" src="images/shadow_texture.PNG" alt="A view of shadows (drawn as darkened geometric shapes) on a screen">
+</div>
+
+<p class="small-size light-font padded"> 
+
+
+The fragment 
 shader would just run for each pixel on the screen, and it would happen after the g-buffer pass so that I have access to the normal vector and world space position (through depth). I can then use those two values to 
 raymarch towards relevant lights, detect if I have a collision with any SDF geometry, and draw a shadow to the mask if I do.
 

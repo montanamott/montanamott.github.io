@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Montana Mott</title>
+</head>
+<body class="primary-dark">
+  <div class="header-div"> 
+    <h1 class="name"> <a style="color:white" href='project-madrigal.html'>> Project Madrigal </a> </h1>
+  </div>
+  <div class="left-aligned center-section">
+    <h1 class="header-size light-font padded"> 
+      Deferred SDF Shadows
+    </h1>
+
+    <div class="padded content-embed">
+      <img  width="640vh" height="340vh" src="images/fractal_friend.PNG" alt="A view of two different scenes where one is drawn correctly, the other is not">
+    </div>
+    <p class="small-size light-font padded"> 
+
+
+    This week in Project Madrigal I mainly worked on shadowcasting for SDF objects, and I also began adding features to flesh out my demo game. I did the shadowcasting mostly how I expected I would in the last blogpost, 
+    but I will give a recap on how they work here before showing some more pretty pictures. <br/> <br/> 
+
+    For my project, I am using the deferred rendering path of Unity's built-in-render-pipeline. With this pipeline, there is a step where all of the shadows that Unity draws have been accumulated into a screenspace texture, 
+    and then they get composited onto the main image. That screenspace texture looks something like this (taken from the frame debuffer): 
+
+  </p>
+
+  <div class="padded content-embed">
+    <img  width="640vh" height="306vh" src="images/shadow_buffer.PNG" alt="A view of a memory buffer containing normal vectors">
+  </div>
+
+
+<p class="small-size light-font padded"> 
+I achieved my shadows by ultimately writing to this buffer so that Unity would composite the shadows onto the scene for me. First though, I actually run a fragment shader that computes whether each pixel on the screen 
+would be shadowed by my Signed-Distance-Function objects through raymarching. I write this out to a temporary buffer (not the built in Unity one right away) so that I can potentially do this at lower resolution than full-screen (for the potential of 
+half resolution shadows). Then, I composite that texture to Unity's built in one using another shader, which then gets composited onto the main scene by Unity. 
+
+<br/> <br/> Throughout all of this, I used Command Buffers, which are groups of graphics code 
+I can set to execute throughout the Unity render pipeline. Command buffers are actually really key here, because there's no way I can see that Unity has exposed that screenspace shadow texture I'm using for this -- I am only able to get it because 
+I grab the Current Active Render Target at the exact time Unity has just written to it in their pipeline. Currently my shadows are hard shadows, but I intend to make them soft shadows soon as it would require only a small amount of 
+extra work in the shader. Here are two images; the first does not have shadows enabled, but the second does. Look at what a difference they make! 
+
+</p>
+
+<div class="padded content-embed">
+  <img  width="480vh" height="388vh" src="images/without_screen_space.PNG" alt="A view of a memory buffer containing normal vectors">
+</div>
+
+<div class="padded content-embed">
+  <img  width="480vh" height="413vh" src="images/with_screen_space.PNG" alt="A view of a memory buffer containing normal vectors">
+</div>
+
+<p class="small-size light-font padded"> 
+Next week, I will continue working on my demo game to craft a gameplay experience that properly shows the capabilities of the technical work I have done. At this point, I've accomplished most of the graphics and physics 
+features I set out to do, and now my aim is to develop the gameplay side of things, with only a few tweaks to the underlying tech here and there when needed. 
+
+<br/> <br/> 
+
+If you would like to download and play the current demo, <a href='devlog_8_builds.zip'> they are contained in the zip file here for Mac and Windows. </a>
+    
+</p>
+
+  </div>
+
+</body>
+</html>

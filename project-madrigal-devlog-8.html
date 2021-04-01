@@ -24,7 +24,7 @@
     but I will give a recap on how they work here before showing some more pretty pictures. <br/> <br/> 
 
     For my project, I am using the deferred rendering path of Unity's built-in-render-pipeline. With this pipeline, there is a step where all of the shadows that Unity draws have been accumulated into a screenspace texture, 
-    and then they get composited onto the main image. That screenspace texture looks something like this (taken from the frame debuffer): 
+    and then they get composited onto the main image. That screenspace texture looks something like this (taken from Unity's frame debugger): 
 
   </p>
 
@@ -34,14 +34,18 @@
 
 
 <p class="small-size light-font padded"> 
-I achieved my shadows by ultimately writing to this buffer so that Unity would composite the shadows onto the scene for me. First though, I actually run a fragment shader that computes whether each pixel on the screen 
-would be shadowed by my Signed-Distance-Function objects through raymarching. I write this out to a temporary buffer (not the built in Unity one right away) so that I can potentially do this at lower resolution than full-screen (for the potential of 
-half resolution shadows). Then, I composite that texture to Unity's built in one using another shader, which then gets composited onto the main scene by Unity. 
+I achieved my shadows by ultimately writing to this buffer so that Unity would composite the shadows onto the scene for me. 
 
-<br/> <br/> Throughout all of this, I used Command Buffers, which are groups of graphics code 
-I can set to execute throughout the Unity render pipeline. Command buffers are actually really key here, because there's no way I can see that Unity has exposed that screenspace shadow texture I'm using for this -- I am only able to get it because 
-I grab the Current Active Render Target at the exact time Unity has just written to it in their pipeline. Currently my shadows are hard shadows, but I intend to make them soft shadows soon as it would require only a small amount of 
-extra work in the shader. Here are two images; the first does not have shadows enabled, but the second does. Look at what a difference they make! 
+<br/> <br/> First though, I run a fragment shader (over a screen space quad) that computes whether each pixel on the screen 
+would be shadowed by my Signed-Distance-Function objects or not by marching towards the relevant lights and detecting intersections. I write this out to a temporary buffer (not the built in Unity one right away) so that I can potentially do this at lower resolution than full-screen (for the potential of 
+half resolution shadows). Then, I composite that SDF shadow texture to Unity's built in one using another shader that only writes the shadows, so that I don't overwrite a rasterized-casted shadow for a given pixel. Then, this final combined texture gets composited onto the main scene by Unity. 
+
+<br/> <br/> Throughout all of this, I used Unity's <a href='https://docs.unity3d.com/Manual/GraphicsCommandBuffers.html'> Command Buffers,</a> which are chunks of graphics code 
+I can set to execute throughout the Unity render pipeline. Having these command buffer insertion points into Unity's pipeline is actually really key here, because there's no way I can see that Unity has nicely exposed that screenspace shadow texture I'm using for this -- I am only able to get it because 
+I grab the Current Active Render Target at the exact time Unity has just written to it in their pipeline (LightEvent.AfterScreenspaceMask). 
+
+<br/> <br/> Currently my shadows are hard shadows, but I intend to make them soft shadows soon as it would require only a small amount of 
+extra work in the shader. Here are two images and a video demo; the first image does not have shadows enabled, but the second does. Look at what a difference they make! 
 
 </p>
 
@@ -53,13 +57,20 @@ extra work in the shader. Here are two images; the first does not have shadows e
   <img  width="480vh" height="413vh" src="images/with_screen_space.PNG" alt="A view of a memory buffer containing normal vectors">
 </div>
 
+<div class="padded content-embed">
+  <video width="640vh" height="319vh" controls>
+    <source src="images/realtime_shadows_compressed.mp4" type="video/mp4">
+  </video>
+</div>
+
+
 <p class="small-size light-font padded"> 
 Next week, I will continue working on my demo game to craft a gameplay experience that properly shows the capabilities of the technical work I have done. At this point, I've accomplished most of the graphics and physics 
 features I set out to do, and now my aim is to develop the gameplay side of things, with only a few tweaks to the underlying tech here and there when needed. 
 
 <br/> <br/> 
 
-If you would like to download and play the current demo, <a href='devlog_8_builds.zip'> they are contained in the zip file here for Mac and Windows. </a>
+If you would like to download and play the current demo, <a href='devlog_8_builds.zip'> the builds are contained in the zip file here for Mac and Windows. </a>
     
 </p>
 

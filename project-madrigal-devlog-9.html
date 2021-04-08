@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<head>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <title>Montana Mott</title>
+</head>
+<body class="primary-dark">
+  <div class="header-div"> 
+    <h1 class="name"> <a style="color:white" href='project-madrigal.html'>> Project Madrigal </a> </h1>
+  </div>
+  <div class="left-aligned center-section">
+    <h1 class="header-size light-font padded"> 
+      Final Gameplay Mechanics
+    </h1>
+
+    <div class="padded content-embed">
+      <img  width="640vh" height="295vh" src="images/main_menu.PNG" alt="A view of two different scenes where one is drawn correctly, the other is not">
+    </div>
+    <p class="small-size light-font padded"> 
+
+    This week in Project Madrigal I worked on finishing all of my gameplay features for the demo so that I can spend the final two weeks adjusting and polishing them. I will go through all of my additions below. 
+
+    <br/> <br/> 
+
+    First, I made these star collectables that the player must find across the map by exploring the fractal. The goal of the demo game will be to collect enough of these so that the player can restore the fractal world to 
+    its natural state using their energy at the end. I also added a grouping system so that after groups of these stars are collected, the fractal world will shift around the player and spawn in the next group of collectables. Also these 
+    are a nice way to demonstrate rasterized geometry being integrated with the raymarched world around it. 
+
+  </p>
+
+  <div class="padded content-embed">
+    <img  width="640vh" height="416vh" src="images/collectable.gif" alt="A view of a memory buffer containing normal vectors">
+  </div>
+
+
+<p class="small-size light-font padded"> 
+
+    Next, I added a main menu and changed the skybox from the default unity one. These were two fairly small, yet impactful decisions that every game needs to look professional. The main menu is actually rendered in realtime and shows 
+    off the changing fractal even before the gameplay begins! 
+
+  </p>
+
+  <div class="padded content-embed">
+    <video width="640vh" height="360vh" controls>
+      <source src="images/smaller_nicer_menu.mp4" type="video/mp4">
+    </video>
+  </div>
+
+
+<p class="small-size light-font padded"> 
+
+
+  Next I added an effect to my player fractal bullet so that it "pops" and deals damage when it collides with any kind of geometry (rasterized or raymarched!). This effect actually involves lerping the fractal SDF to a sphere SDF, further showing how cool it can be 
+  to change SDF parameters on the fly. 
+
+</p>
+
+<div class="padded content-embed">
+  <video width="640vh" height="360vh" controls>
+    <source src="images/for_gif.mp4" type="video/mp4">
+  </video>
+</div>
+
+
+<p class="small-size light-font padded"> 
+  I then added basic enemies that move around the fractal and fire at the player. They're mainly there so you can have fun blowing them up with the fractal projectile as you look for the star collectables. Here is a demo of that (I plan to model a nicer 
+  enemy eventually):
+  
+</p>
+
+<div class="padded content-embed">
+  <video width="640vh" height="360vh" controls>
+    <source src="images/enemy_combat.mp4" type="video/mp4">
+  </video>
+</div>
+
+
+<p class="small-size light-font padded"> 
+  
+  I also did a lot of work to fix my 
+  CineMachine third person camera so that it does not go inside of the main world SDF. I had it close to working in the previous builds, but if the camera moved fast it could move inside the SDF -- I fixed those cases. 
+
+  <br/> <br/> 
+
+  Next week, I plan to continue fleshing out these experiences and making the gameplay as complete as possible. I would like to add music and sound effects as well, as those both go a long way in making gameplay feel complete!
+</p>
+
+  </div>
+
+</body>
+</html>

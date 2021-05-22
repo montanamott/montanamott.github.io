@@ -39,8 +39,8 @@ img.main-pic {
 
 .light-font {
     color: #e4e4e4;
-    font-size: 1.8rem;
-    font-family: "Verdana";
+    font-size: 1.6rem;
+    font-family: "Segoe UI";
     line-height: 1.25;
 }
 
@@ -54,7 +54,7 @@ img.main-pic {
 
 .name {
     font-family: "Lucida Console";
-    color: white;
+    color: #f2f2f2;
     font-size: 3.7rem;
 }
 
@@ -95,4 +95,72 @@ img.main-pic {
 a {
     color: rgb(94, 215, 236);
     text-decoration: none; 
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #242425;
+    width:100%;
+    max-width: 900px;
+    min-width: 500px;
+    border-radius:8px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-bottom: 1%;
+  }
+  
+  .topnav a {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 1.8rem;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  .topnav .nametitle {
+    float: left;
+    color: #2ff2f2;
+    text-align: center;
+    padding: 14px 40px;
+    text-decoration: none;
+    font-size: 2.0rem;
+    font-family: "Lucida Console";
+    color: #f2f2f2;
+    text-align:center;
+
+  }
+
+
+
+  .img-text-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5% 5% 5% 5%;
+    
+   
+
+  }
+
+  .left-pair {
+    display: box;
+    text-align: left;
+  }
+
+  .right-pair {
+    display: box;
+    text-align: right;
+  }
+
 }
